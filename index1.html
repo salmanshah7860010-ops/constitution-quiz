@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Indian Constitution Quiz</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --navy: #142850;
+    --saffron: #ff9933;
+    --green: #138808;
+    --white: #ffffff;
+    --light: #f3f6fb;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--light);
+    color: #222;
+    min-height: 100vh;
+}
+
+.top-bar {
+    height: 7px;
+    background: linear-gradient(
+        to right,
+        var(--saffron) 0 33.33%,
+        white 33.33% 66.66%,
+        var(--green) 66.66% 100%
+    );
+}
+
+header {
+    background: var(--navy);
+    color: white;
+    text-align: center;
+    padding: 28px 15px 32px;
+}
+
+.flag {
+    font-size: 38px;
+    margin-bottom: 12px;
+}
+
+header h1 {
+    font-size: clamp(23px, 5vw, 34px);
+    margin-bottom: 10px;
+}
+
+header p {
+    color: #e0e8f8;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.badge {
+    display: inline-block;
+    margin-top: 17px;
+    background: #ffffff1c;
+    border: 1px solid #ffffff55;
+    padding: 8px 14px;
+    border-radius: 30px;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.container {
+    width: 92%;
+    max-width: 650px;
+    margin: 25px auto 40px;
+}
+
+.card {
+    background: white;
+    padding: 24px;
+    border-radius: 18px;
+    box-shadow: 0 5px 25px #14285012;
+    border: 1px solid #e6eaf1;
+}
+
+.intro {
+    text-align: center;
+}
+
+.emblem {
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+
+.intro h2 {
+    color: var(--navy);
+    margin-bottom: 12px;
+    font-size: 23px;
+}
+
+.intro p {
+    color: #606a7b;
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 22px 0;
+}
+
+.info {
+    background: #f1f4f9;
+    padding: 10px 13px;
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--navy);
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.primary-btn {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    background: var(--navy);
+    font-size: 16px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.primary-btn:hover {
+    background: #25477d;
+}
+
+.question-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 16px;
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--navy);
+}
+
+.progress-bg {
+    height: 7px;
+    border-radius: 20px;
+    background: #e7ebf2;
+    margin-bottom: 25px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(
+        to right,
+        var(--saffron),
+        var(--green)
+    );
+    transition: width 0.3s;
+}
+
+.question {
+    font-size: 20px;
+    line-height: 1.5;
+    color: var(--navy);
+    margin-bottom: 22px;
+}
+
+.option {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #dce2ec;
+    background: white;
+    border-radius: 10px;
+    text-align: left;
+    margin-bottom: 12px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #263449;
+    transition: 0.2s;
+}
+
+.option:hover:not(:disabled) {
+    border-color: var(--navy);
+    background: #f4f7fc;
+}
+
+.option.correct {
+    background: #e7f7eb;
+    border-color: #138808;
+    color: #116b09;
+}
+
+.option.wrong {
+    background: #fff0ed;
+    border-color: #d94c38;
+    color: #a52e20;
+}
+
+.option:disabled {
+    cursor: default;
+}
+
+.feedback {
+    padding: 13px;
+    border-radius: 9px;
+    margin: 15px 0;
+    font-size: 14px;
+    line-height: 1.6;
+    display: none;
+}
+
+.feedback.show {
+    display: block;
+}
+
+.feedback.good {
+    background: #e7f7eb;
+    color: #116b09;
+}
+
+.feedback.bad {
+    background: #fff0ed;
+    color: #a52e20;
+}
+
+.result {
+    text-align: center;
+}
+
+.trophy {
+    font-size: 65px;
+    margin: 8px 0 15px;
+}
+
+.result h2 {
+    color: var(--navy);
+    margin-bottom: 10px;
+    font-size: 27px;
+}
+
+.result p {
+    line-height: 1.7;
+    color: #5d687a;
+}
+
+.score-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 8px solid var(--saffron);
+    margin: 25px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #fffaf4;
+}
+
+.score-number {
+    color: var(--navy);
+    font-size: 37px;
+    font-weight: bold;
+}
+
+.score-label {
+    font-size: 12px;
+    color: #687387;
+    margin-top: 5px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px 12px;
+    font-size: 12px;
+    color: #687387;
+    line-height: 1.8;
+}
+
+footer strong {
+    color: var(--navy);
+}
+
+.hidden {
+    display: none !important;
+}
+
+@media (max-width: 400px) {
+    .card {
+        padding: 19px;
+    }
+
+    .question {
+        font-size: 18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-bar"></div>
+
+<header>
+    <div class="flag">🇮🇳</div>
+    <h1>Indian Constitution Quiz</h1>
+    <p>Know Your Constitution. Understand Your Rights.<br>Celebrate Our Democracy.</p>
+    <div class="badge">RAMAN HOUSE • OUR CONSTITUTION, OUR PRIDE</div>
+</header>
+
+<main class="container">
+
+    <!-- INTRO SCREEN -->
+
+    <section class="card intro" id="intro">
+
+        <div class="emblem">📜</div>
+
+        <h2>Are You Constitution Smart?</h2>
+
+        <p>
+            Test your knowledge of the Indian Constitution
+            through 15 interesting multiple-choice questions.
+            Challenge yourself and discover how much you know
+            about the world's largest written national constitution.
+        </p>
+
+        <div class="info-row">
+            <div class="info">📝 15 Questions</div>
+            <div class="info">🎯 1 Point Each</div>
+            <div class="info">⏱️ No Time Limit</div>
+        </div>
+
+        <button class="primary-btn" onclick="startQuiz()">
+            START THE QUIZ →
+        </button>
+
+    </section>
+
+
+    <!-- QUIZ SCREEN -->
+
+    <section class="card hidden" id="quiz">
+
+        <div class="question-top">
+            <span id="questionCount">QUESTION 1 OF 15</span>
+            <span id="scoreDisplay">SCORE: 0</span>
+        </div>
+
+        <div class="progress-bg">
+            <div class="progress" id="progress"></div>
+        </div>
+
+        <h2 class="question" id="questionText"></h2>
+
+        <div id="options"></div>
+
+        <div class="feedback" id="feedback"></div>
+
+        <button
+            class="primary-btn hidden"
+            id="nextButton"
+            onclick="nextQuestion()">
+            NEXT QUESTION →
+        </button>
+
+    </section>
+
+
+    <!-- RESULT SCREEN -->
+
+    <section class="card result hidden" id="result">
+
+        <div class="trophy" id="trophy">🏆</div>
+
+        <h2 id="resultTitle">Quiz Completed!</h2>
+
+        <p id="resultMessage"></p>
+
+        <div class="score-circle">
+            <div class="score-number" id="finalScore">0/15</div>
+            <div class="score-label">YOUR FINAL SCORE</div>
+        </div>
+
+        <p id="percentage"></p>
+
+        <br>
+
+        <button class="primary-btn" onclick="restartQuiz()">
+            🔄 TRY AGAIN
+        </button>
+
+    </section>
+
+</main>
+
+<footer>
+    <strong>INDIAN CONSTITUTION: OUR PRIDE 🇮🇳</strong>
+    <br>
+    An educational initiative by Raman House
+    <br>
+    Learn your rights. Respect your duties. Celebrate democracy.
+</footer>
+
+
+<script>
+
+const questions = [
+
+{
+    q: "1. On which date was the Constitution of India adopted?",
+    options: [
+        "15 August 1947",
+        "26 November 1949",
+        "26 January 1950",
+        "2 October 1949"
+    ],
+    answer: 1,
+    explanation: "The Constituent Assembly adopted the Constitution on 26 November 1949."
+},
+
+{
+    q: "2. When did the Constitution of India come into force?",
+    options: [
+        "15 August 1947",
+        "26 November 1949",
+        "26 January 1950",
+        "26 January 1949"
+    ],
+    answer: 2,
+    explanation: "The Constitution came into force on 26 January 1950, celebrated as Republic Day."
+},
+
+{
+    q: "3. Who was the Chairman of the Drafting Committee?",
+    options: [
+        "Jawaharlal Nehru",
+        "Dr. B. R. Ambedkar",
+        "Dr. Rajendra Prasad",
+        "Sardar Vallabhbhai Patel"
+    ],
+    answer: 1,
+    explanation: "Dr. B. R. Ambedkar chaired the Drafting Committee of the Constituent Assembly."
+},
+
+{
+    q: "4. Which part of the Constitution contains Fundamental Rights?",
+    options: [
+        "Part I",
+        "Part II",
+        "Part III",
+        "Part IV"
+    ],
+    answer: 2,
+    explanation: "Fundamental Rights are contained in Part III of the Constitution."
+},
+
+{
+    q: "5. Which Article guarantees equality before the law?",
+    options: [
+        "Article 14",
+        "Article 19",
+        "Article 21",
+        "Article 32"
+    ],
+    answer: 0,
+    explanation: "Article 14 guarantees equality before the law and equal protection of the laws."
+},
+
+{
+    q: "6. Which Article provides the Right to Education for children aged 6–14?",
+    options: [
+        "Article 14",
+        "Article 19",
+        "Article 21A",
+        "Article 25"
+    ],
+    answer: 2,
+    explanation: "Article 21A provides free and compulsory education for children aged 6–14."
+},
+
+{
+    q: "7. What is the minimum voting age for elections in India?",
+    options: [
+        "16 years",
+        "18 years",
+        "21 years",
+        "25 years"
+    ],
+    answer: 1,
+    explanation: "The voting age for eligible Indian citizens is 18 years."
+},
+
+{
+    q: "8. Which body conducts elections to the Lok Sabha and State Legislative Assemblies?",
+    options: [
+        "Supreme Court of India",
+        "Parliament Secretariat",
+        "Election Commission of India",
+        "Union Public Service Commission"
+    ],
+    answer: 2,
+    explanation: "The Election Commission of India supervises elections to Parliament and State Legislatures."
+},
+
+{
+    q: "9. Who was the President of the Constituent Assembly?",
+    options: [
+        "Dr. Rajendra Prasad",
+        "Dr. B. R. Ambedkar",
+        "Mahatma Gandhi",
+        "C. Rajagopalachari"
+    ],
+    answer: 0,
+    explanation: "Dr. Rajendra Prasad was the President of the Constituent Assembly."
+},
+
+{
+    q: "10. Which Article is associated with the abolition of untouchability?",
+    options: [
+        "Article 14",
+        "Article 17",
+        "Article 21",
+        "Article 24"
+    ],
+    answer: 1,
+    explanation: "Article 17 abolishes untouchability and forbids its practice."
+},
+
+{
+    q: "11. How many Fundamental Duties are currently listed in the Constitution?",
+    options: [
+        "8",
+        "10",
+        "11",
+        "12"
+    ],
+    answer: 2,
+    explanation: "There are 11 Fundamental Duties in Article 51A."
+},
+
+{
+    q: "12. Which part of the Constitution contains the Directive Principles of State Policy?",
+    options: [
+        "Part II",
+        "Part III",
+        "Part IV",
+        "Part V"
+    ],
+    answer: 2,
+    explanation: "The Directive Principles of State Policy are contained in Part IV."
+},
+
+{
+    q: "13. What does the word 'Republic' mean in the Indian context?",
+    options: [
+        "The country has a hereditary monarch",
+        "The head of state is not a hereditary monarch",
+        "Only one political party can govern",
+        "The judiciary makes all laws"
+    ],
+    answer: 1,
+    explanation: "India is a republic because its head of state is elected, not a hereditary monarch."
+},
+
+{
+    q: "14. Which Article is known for the Right to Constitutional Remedies?",
+    options: [
+        "Article 19",
+        "Article 21",
+        "Article 32",
+        "Article 44"
+    ],
+    answer: 2,
+    explanation: "Article 32 allows people to approach the Supreme Court to enforce Fundamental Rights."
+},
+
+{
+    q: "15. Which institution is the final interpreter of the Constitution in judicial disputes?",
+    options: [
+        "Election Commission of India",
+        "Supreme Court of India",
+        "Lok Sabha",
+        "Finance Commission"
+    ],
+    answer: 1,
+    explanation: "The Supreme Court interprets the Constitution when deciding constitutional disputes."
+}
+
+];
+
+let currentQuestion = 0;
+let score = 0;
+let answered = false;
+
+
+function startQuiz() {
+
+    currentQuestion = 0;
+    score = 0;
+
+    document.getElementById("intro").classList.add("hidden");
+    document.getElementById("result").classList.add("hidden");
+    document.getElementById("quiz").classList.remove("hidden");
+
+    showQuestion();
+}
+
+
+function showQuestion() {
+
+    answered = false;
+
+    const item = questions[currentQuestion];
+
+    document.getElementById("questionCount").textContent =
+        "QUESTION " + (currentQuestion + 1) + " OF " + questions.length;
+
+    document.getElementById("scoreDisplay").textContent =
+        "SCORE: " + score;
+
+    document.getElementById("questionText").textContent = item.q;
+
+    document.getElementById("progress").style.width =
+        (currentQuestion / questions.length * 100) + "%";
+
+    document.getElementById("feedback").className = "feedback";
+    document.getElementById("feedback").textContent = "";
+
+    document.getElementById("nextButton").classList.add("hidden");
+
+    const optionsBox = document.getElementById("options");
+
+    optionsBox.innerHTML = "";
+
+    item.options.forEach(function(option, index) {
+
+        const button = document.createElement("button");
+
+        button.className = "option";
+        button.textContent =
+            String.fromCharCode(65 + index) + ". " + option;
+
+        button.onclick = function() {
+            selectAnswer(index);
+        };
+
+        optionsBox.appendChild(button);
+
+    });
+
+}
+
+
+function selectAnswer(selected) {
+
+    if (answered) return;
+
+    answered = true;
+
+    const item = questions[currentQuestion];
+    const buttons = document.querySelectorAll(".option");
+
+    buttons.forEach(function(button) {
+        button.disabled = true;
+    });
+
+    const feedback = document.getElementById("feedback");
+
+    if (selected === item.answer) {
+
+        score++;
+
+        buttons[selected].classList.add("correct");
+
+        feedback.className = "feedback show good";
+
+        feedback.innerHTML =
+            "✅ <strong>Correct Answer!</strong><br>" +
+            item.explanation;
+
+    } else {
+
+        buttons[selected].classList.add("wrong");
+
+        buttons[item.answer].classList.add("correct");
+
+        feedback.className = "feedback show bad";
+
+        feedback.innerHTML =
+            "❌ <strong>Not quite!</strong><br>" +
+            "Correct answer: " +
+            item.options[item.answer] +
+            "<br>" + item.explanation;
+
+    }
+
+    document.getElementById("scoreDisplay").textContent =
+        "SCORE: " + score;
+
+    document.getElementById("nextButton").classList.remove("hidden");
+
+    if (currentQuestion === questions.length - 1) {
+
+        document.getElementById("nextButton").textContent =
+            "VIEW MY RESULT 🏆";
+
+    } else {
+
+        document.getElementById("nextButton").textContent =
+            "NEXT QUESTION →";
+
+    }
+
+}
+
+
+function nextQuestion() {
+
+    if (!answered) return;
+
+    currentQuestion++;
+
+    if (currentQuestion < questions.length) {
+
+        showQuestion();
+
+    } else {
+
+        showResult();
+
+    }
+
+}
+
+
+function showResult() {
+
+    document.getElementById("quiz").classList.add("hidden");
+    document.getElementById("result").classList.remove("hidden");
+
+    document.getElementById("progress").style.width = "100%";
+
+    const percent = Math.round((score / questions.length) * 100);
+
+    document.getElementById("finalScore").textContent =
+        score + "/" + questions.length;
+
+    document.getElementById("percentage").textContent =
+        "You scored " + percent + "%";
+
+    let title;
+    let message;
+    let trophy;
+
+    if (score === 15) {
+
+        title = "Constitution Champion!";
+        message = "Outstanding! You have an excellent understanding of the Indian Constitution.";
+        trophy = "🏆";
+
+    } else if (score >= 12) {
+
+        title = "Excellent Work!";
+        message = "You know your Constitution very well. Keep learning and spreading awareness!";
+        trophy = "🥇";
+
+    } else if (score >= 9) {
+
+        title = "Great Effort!";
+        message = "You have a good understanding. Review a few facts and challenge yourself again.";
+        trophy = "🥈";
+
+    } else if (score >= 5) {
+
+        title = "Keep Learning!";
+        message = "Every great citizen keeps learning. Review the Constitution and try again!";
+        trophy = "📚";
+
+    } else {
+
+        title = "Your Learning Journey Begins!";
+        message = "Explore the Constitution, understand your rights, and take the quiz again!";
+        trophy = "🇮🇳";
+
+    }
+
+    document.getElementById("resultTitle").textContent = title;
+    document.getElementById("resultMessage").textContent = message;
+    document.getElementById("trophy").textContent = trophy;
+
+}
+
+
+function restartQuiz() {
+
+    document.getElementById("result").classList.add("hidden");
+    document.getElementById("intro").classList.remove("hidden");
+
+    document.getElementById("progress").style.width = "0%";
+
+}
+
+</script>
+
+</body>
+</html>
